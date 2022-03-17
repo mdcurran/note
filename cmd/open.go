@@ -8,9 +8,16 @@ import (
 
 var openCmd = &cobra.Command{
 	Use:   "open",
-	Short: "open an existing note",
+	Short: "Open an existing note",
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("not implemented\n")
+		fullPath := getPath(args[0])
+
+		err := openFile(fullPath)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	},
 }
 

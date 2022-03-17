@@ -1,11 +1,16 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
+	"os/exec"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
+
+var noteDirectory string
 
 var rootCmd = &cobra.Command{
 	Use:   "note",
@@ -21,15 +26,27 @@ func Execute() {
 	}
 }
 
+func getPath(filename string) string {
+	return strings.Join([]string{noteDirectory, filename}, "/")
+}
+
+func openFile(path string) error {
+	c := exec.Command("open", "-e", path)
+	return c.Run()
+}
+
 func init() {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		panic(err)
 	}
-	noteDirectory := fmt.Sprintf("%s/.local/opt/note", home)
+	noteDirectory = fmt.Sprintf("%s/.local/opt/note", home)
 
 	cobra.OnInitialize(func() {
-		err := os.MkdirAll(noteDirectory, 0755)
+		_, err := os.Stat(noteDirectory)
+		if errors.Is(err, os.ErrNotExist) {
+			err = os.MkdirAll(noteDirectory, 0755)
+		}
 		if err != nil {
 			panic(err)
 		}
