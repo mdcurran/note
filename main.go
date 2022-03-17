@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/mdcurran/note/note/cmd"
+	"github.com/mdcurran/note/cmd"
 )
 
 func main() {
