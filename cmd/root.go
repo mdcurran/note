@@ -15,7 +15,15 @@ var noteDirectory string
 var rootCmd = &cobra.Command{
 	Use:   "note",
 	Short: "note manages text files from the command line",
-	Run:   func(cmd *cobra.Command, args []string) {},
+	Run: func(cmd *cobra.Command, args []string) {
+		// If "note" is the command then just output the help information.
+		b, err := exec.Command("note", "--help").Output()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Print(string(b))
+	},
 }
 
 func Execute() {
