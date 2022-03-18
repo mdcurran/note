@@ -11,9 +11,9 @@ var openCmd = &cobra.Command{
 	Short: "Open an existing note",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fullPath := getPath(args[0])
+		path := getPath(args[0])
 
-		err := openFile(fullPath)
+		err := openFile(path)
 		if err != nil {
 			fmt.Println(err)
 			return

@@ -13,21 +13,21 @@ var newCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		filename := args[0]
-		fullPath := getPath(filename)
+		path := getPath(filename)
 
-		_, err := os.Stat(fullPath)
+		_, err := os.Stat(path)
 		if err == nil {
 			fmt.Printf("%s already exists\n", filename)
 			return
 		}
 
-		_, err = os.Create(fullPath)
+		_, err = os.Create(path)
 		if err != nil {
 			fmt.Printf("error creating %s: %s\n", filename, err)
 			return
 		}
 
-		err = openFile(fullPath)
+		err = openFile(path)
 		if err != nil {
 			fmt.Println(err)
 			return

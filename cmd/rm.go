@@ -39,15 +39,15 @@ var rmCmd = &cobra.Command{
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		filename := args[0]
-		fullPath := getPath(filename)
+		path := getPath(filename)
 
-		_, err := os.Stat(fullPath)
+		_, err := os.Stat(path)
 		if errors.Is(err, os.ErrNotExist) {
 			fmt.Printf("%s does not exist\n", filename)
 			return
 		}
 
-		err = os.Remove(fullPath)
+		err = os.Remove(path)
 		if err != nil {
 			fmt.Printf("error deleting %s: %s\n", filename, err)
 			return
