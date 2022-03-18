@@ -23,7 +23,7 @@ var newCmd = &cobra.Command{
 
 		_, err = os.Create(fullPath)
 		if err != nil {
-			fmt.Printf("error creating %s: %s", filename, err)
+			fmt.Printf("error creating %s: %s\n", filename, err)
 			return
 		}
 
