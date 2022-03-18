@@ -10,13 +10,13 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all notes",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		b, err := exec.Command("ls", noteDirectory).Output()
 		if err != nil {
-			fmt.Println(err)
-			return
+			return err
 		}
 		fmt.Print(string(b))
+		return nil
 	},
 }
 

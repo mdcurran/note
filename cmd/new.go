@@ -11,27 +11,26 @@ var newCmd = &cobra.Command{
 	Use:   "new",
 	Short: "Create a new note",
 	Args:  cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		filename := args[0]
 		path := getPath(filename)
 
 		_, err := os.Stat(path)
 		if err == nil {
-			fmt.Printf("%s already exists\n", filename)
-			return
+			return fmt.Errorf("%s already exists", filename)
 		}
 
 		_, err = os.Create(path)
 		if err != nil {
-			fmt.Printf("error creating %s: %s\n", filename, err)
-			return
+			return fmt.Errorf("error creating %s: %s", filename, err)
 		}
 
 		err = openFile(path)
 		if err != nil {
-			fmt.Println(err)
-			return
+			return err
 		}
+
+		return nil
 	},
 }
 

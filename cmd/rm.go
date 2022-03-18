@@ -37,21 +37,21 @@ var rmCmd = &cobra.Command{
 
 		return nil
 	},
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		filename := args[0]
 		path := getPath(filename)
 
 		_, err := os.Stat(path)
 		if errors.Is(err, os.ErrNotExist) {
-			fmt.Printf("%s does not exist\n", filename)
-			return
+			return fmt.Errorf("%s does not exist", filename)
 		}
 
 		err = os.Remove(path)
 		if err != nil {
-			fmt.Printf("error deleting %s: %s\n", filename, err)
-			return
+			return fmt.Errorf("error deleting %s: %s", filename, err)
 		}
+
+		return nil
 	},
 }
 

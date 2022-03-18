@@ -1,23 +1,20 @@
 package cmd
 
-import (
-	"fmt"
-
-	"github.com/spf13/cobra"
-)
+import "github.com/spf13/cobra"
 
 var openCmd = &cobra.Command{
 	Use:   "open",
 	Short: "Open an existing note",
 	Args:  cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		path := getPath(args[0])
 
 		err := openFile(path)
 		if err != nil {
-			fmt.Println(err)
-			return
+			return err
 		}
+
+		return nil
 	},
 }
 

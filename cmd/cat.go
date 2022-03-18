@@ -10,13 +10,13 @@ import (
 var catCmd = &cobra.Command{
 	Use:   "cat",
 	Short: "Print a note using GNU cat",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		b, err := exec.Command("cat", getPath(args[0])).Output()
 		if err != nil {
-			fmt.Println(err)
-			return
+			return err
 		}
 		fmt.Println(string(b))
+		return nil
 	},
 }
 
