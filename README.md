@@ -13,3 +13,8 @@ alias nrm='note rm'
 alias nmv='note mv'
 alias ncat='note cat'
 ```
+
+#### Features
+
+* Add zsh tab-completion using `~/.local/opt/note`.
+* Allow nested notes (like how `pass` has nested secrets).
